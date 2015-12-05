@@ -59,21 +59,28 @@ void Storage::print() {
 }
 
 Storage::Storage(int bytesCount) {
-    this->storageName = "defaultStorage";
+    string name = "storage";
+    name.append(to_string(rand()));
+    this->storageName = name;
+
     for (int i = 0; i < bytesCount; ++i) {
         BYTE newByte;
         this->storageRegion.push_back(newByte);
     }
+
     this->capacity = BITCOUNT * storageRegion.size();
     this->freeSpace = this->capacity;
 }
 
 Storage::Storage(string storageName, int bytesCount){
+
     this->storageName = storageName;
+
     for (int i = 0; i < bytesCount; ++i) {
         BYTE newByte;
         this->storageRegion.push_back(newByte);
     }
+
     this->capacity = BITCOUNT * storageRegion.size();
     this->freeSpace = this->capacity;
 }
@@ -82,7 +89,7 @@ bool Storage::applyForSpace(int quantity, Process &process) {
 
     vector<Position> &dataPosition = process.dataPosition;
     string owner = process.name();
-    
+
     if (this->freeSpace < quantity) {
         return false;
     }
@@ -124,6 +131,7 @@ bool Storage::freeForSpace(vector<Position> &dataPosition) {
 
 Position Storage::traverseAvailableUnit() {
     Position result;
+
     for (int row = 0; row < this->storageRegion.size(); ++row) {
         for (int column = 0; column < BITCOUNT; ++column) {
             if (this->storageRegion[row][column] == 0) {

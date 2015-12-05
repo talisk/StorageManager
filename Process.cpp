@@ -25,7 +25,9 @@ void Process::description() {
 }
 
 Process::Process() {
-    this->processName = "defaultStorage";
+    string name = "process";
+    name.append(to_string(rand()));
+    this->processName = name;
 }
 
 Process::Process(string processName){
