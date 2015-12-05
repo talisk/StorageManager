@@ -78,7 +78,11 @@ Storage::Storage(string storageName, int bytesCount){
     this->freeSpace = this->capacity;
 }
 
-bool Storage::applyForSpace(int quantity, vector<Position> &dataPosition, string owner) {
+bool Storage::applyForSpace(int quantity, Process &process) {
+
+    vector<Position> &dataPosition = process.dataPosition;
+    string owner = process.name();
+    
     if (this->freeSpace < quantity) {
         return false;
     }
@@ -99,11 +103,18 @@ bool Storage::applyForSpace(int quantity, vector<Position> &dataPosition, string
 bool Storage::freeForSpace(vector<Position> &dataPosition) {
     unsigned long freeSize = dataPosition.size();
 
+    unsigned long notOwn = 0;
+
     for (int i = 0; i < freeSize; ++i) {
+        if (dataPosition[i].storage != this->storageName) {
+            notOwn++;
+            continue;
+        }
         set0(dataPosition.back());
         dataPosition.pop_back();
     }
 
+    freeSize -= notOwn;
     this->freeSpace += freeSize;
 
     return true;

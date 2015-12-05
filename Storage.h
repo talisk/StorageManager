@@ -6,7 +6,7 @@
 #define STORAGEMANAGER_STORAGE_H
 
 #include "Global.h"
-
+#include "Process.h"
 
 class Storage {
 public:
@@ -21,7 +21,7 @@ public:
 	 */
     void print();
 
-    bool applyForSpace(int quantity, vector<Position> &dataPosition, string owner);
+    bool applyForSpace(int quantity, Process &process);
     bool freeForSpace(vector<Position> &dataPosition);
 
 
