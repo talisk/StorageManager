@@ -86,6 +86,7 @@ bool Storage::applyForSpace(int quantity, vector<Position> &dataPosition, string
     for (int i = 0; i < quantity; ++i) {
         Position result = traverseAvailableUnit();
         result.owner = owner;
+        result.storage = this->storageName;
         dataPosition.push_back(result);
         set1(result);
     }

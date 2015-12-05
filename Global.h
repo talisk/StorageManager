@@ -25,6 +25,7 @@ using namespace std;
 typedef struct Position {
     int column,row;
     string owner;
+    string storage;
 }Position;
 
 #endif //STORAGEMANAGER_GLOBAL_H
