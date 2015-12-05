@@ -12,4 +12,19 @@
 using std::bitset;
 using namespace std;
 
+#ifndef BITCOUNT
+#define BITCOUNT 8
+#endif
+
+#ifndef BYTE
+#ifdef BITCOUNT
+#define BYTE bitset<BITCOUNT>
+#endif
+#endif
+
+typedef struct Position {
+    int column,row;
+    string owner;
+}Position;
+
 #endif //STORAGEMANAGER_GLOBAL_H

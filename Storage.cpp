@@ -27,7 +27,7 @@ void Storage::print() {
     cout<<"Storage Name:\t"<<this->storageName<<endl;
     cout<<"Capacity:\t\t"<<this->capacity<<" bits"<<endl;
     cout<<"Free:\t\t\t"<<this->freeSpace<<" bits"<<endl;
-    cout<<"Usage Rates:\t"<<((float)this->freeSpace / (float)this->capacity)*100<<"%"<<endl;
+    cout<<"Usage Rates:\t"<<(1 - (float)this->freeSpace / (float)this->capacity)*100<<"%"<<endl;
     for (int k = 0; k < (BITCOUNT + 1) * 2; ++k) {
         cout<<"----";
     }
@@ -78,3 +78,55 @@ Storage::Storage(string storageName, int bytesCount){
     this->freeSpace = this->capacity;
 }
 
+bool Storage::applyForSpace(int quantity, vector<Position> &dataPosition, string owner) {
+    if (this->freeSpace < quantity) {
+        return false;
+    }
+
+    for (int i = 0; i < quantity; ++i) {
+        Position result = traverseAvailableUnit();
+        result.owner = owner;
+        dataPosition.push_back(result);
+        set1(result);
+    }
+
+    this->freeSpace -= quantity;
+
+    return true;
+}
+
+bool Storage::freeForSpace(vector<Position> &dataPosition) {
+    unsigned long freeSize = dataPosition.size();
+
+    for (int i = 0; i < freeSize; ++i) {
+        set0(dataPosition.back());
+        dataPosition.pop_back();
+    }
+
+    this->freeSpace += freeSize;
+
+    return true;
+}
+
+// private methods
+
+Position Storage::traverseAvailableUnit() {
+    Position result;
+    for (int row = 0; row < this->storageRegion.size(); ++row) {
+        for (int column = 0; column < BITCOUNT; ++column) {
+            if (this->storageRegion[row][column] == 0) {
+                result.row = row;
+                result.column = column;
+                return result;
+            }
+        }
+    }
+}
+
+void Storage::set0(Position position) {
+    this->storageRegion[position.row].reset(position.column);
+}
+
+void Storage::set1(Position position) {
+    this->storageRegion[position.row].set(position.column);
+}

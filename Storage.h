@@ -7,16 +7,6 @@
 
 #include "Global.h"
 
-#ifndef BITCOUNT
-#define BITCOUNT 8
-#endif
-
-#ifndef BYTE
-#ifdef BITCOUNT
-#define BYTE bitset<BITCOUNT>
-#endif
-#endif
-
 
 class Storage {
 public:
@@ -30,6 +20,9 @@ public:
      * Print the storage state by table.
 	 */
     void print();
+
+    bool applyForSpace(int quantity, vector<Position> &dataPosition, string owner);
+    bool freeForSpace(vector<Position> &dataPosition);
 
 
     /**
@@ -47,11 +40,17 @@ public:
 
 
 
+
+
 private:
     string storageName;
     vector<BYTE> storageRegion;
     unsigned long capacity;
     unsigned long freeSpace;
+
+    void set1(Position position);
+    void set0(Position position);
+    Position traverseAvailableUnit();
 };
 
 
