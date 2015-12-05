@@ -45,7 +45,7 @@ void Storage::print() {
     for (int i = 0; i < this->storageRegion.size(); ++i) {
         cout<<"byte"<<i<<"\t|\t";
         for (int j = 0; j < BITCOUNT; ++j) {
-            cout<<this->storageRegion[i][j]<<"\t|\t";
+            cout<<(this->storageRegion[i][j]?"■":"□")<<"\t|\t";
         }
 
         cout<<endl;
