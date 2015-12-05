@@ -20,6 +20,12 @@ void Process::description() {
     cout<<"Process Name:\t"<<this->processName<<endl;
     cout<<"Data Size:\t\t"<<this->dataSize()<<endl;
     for (int i = 0; i < this->dataSize(); ++i) {
+        cout<<this->name()<<": (byte"<<this->dataPosition[i].row<<", bit"<<this->dataPosition[i].column<<")"<<"\t\t";
+        i++;
+        if (i>=this->dataSize()) {
+            cout<<endl;
+            continue;
+        }
         cout<<this->name()<<": (byte"<<this->dataPosition[i].row<<", bit"<<this->dataPosition[i].column<<")"<<endl;
     }
 }
